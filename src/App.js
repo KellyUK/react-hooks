@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-// import Accordion from './components/Accordion';
-// import Search from './components/Search';
+import { BrowserRouter as Router, Link, Switch, Route } from 'react-router-dom';
+import Accordion from './components/Accordion';
+import Search from './components/Search';
 import Dropdown from './components/Dropdown';
 import Translate from './components/Translate';
+import Header from './components/Header';
 
 const items = [
   {
@@ -38,17 +40,31 @@ const App = () => {
   const [selected, setSelected] = useState(options[0]);
 
   return (
-    <div>
-      <h1>Hooks App</h1>
-      {/* <Accordion items={items} /> */}
-      {/* <Search /> */}
-      {/* <Dropdown
-        label={label}
-        options={options}
-        selected={selected}
-        onSelectedChange={setSelected}
-      /> */}
-      <Translate />
+    <div className='ui container'>
+      <Router>
+        <Header />
+        <Switch>
+          <Route path='/search'>
+            <Search />
+          </Route>
+
+          <Route path='/dropdown'>
+            <Dropdown
+              label='Select a color'
+              options={options}
+              selected={selected}
+              onSelectedChange={setSelected}
+            />
+          </Route>
+
+          <Route path='/accordion'>
+            <Accordion items={items} />
+          </Route>
+          <Route path='/translate'>
+            <Translate />
+          </Route>
+        </Switch>
+      </Router>
     </div>
   );
 };
